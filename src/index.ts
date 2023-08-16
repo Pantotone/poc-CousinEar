@@ -5,7 +5,10 @@ import path from "node:path";
 import { pipeline } from "node:stream";
 import os from "node:os";
 import fs from "node:fs";
+import { exec } from "child_process";
+import { promisify } from "util";
 import * as prism from "prism-media";
+const execAwait = promisify(exec);
 
 const temporaryFolder = path.join(os.tmpdir(), "cousinear");
 const recordingFolder = path.join(temporaryFolder, "recordings");
@@ -55,21 +58,28 @@ function record(guildId: string, member: GuildMember) {
         }
     });
 
-    const pcmStream = new prism.opus.Decoder({
-        frameSize: 960, channels: 2, rate: 48000
-    });
+    const frameSize = 16000;
+    const channels = 1;
+    const rate = 16000;
 
-    // ffmpeg -f s16le -ar 48000 -ac 2 -i merge.pcm out.mp3
+    const pcmStream = new prism.opus.Decoder({
+        frameSize, channels, rate
+    });
 
     const out = fs.createWriteStream(recordingFilePath);
 
-    console.log(`Started recording: ${member.user.displayName} - ${startTime}`);
+    // console.log(`Started recording: ${member.user.displayName} - ${startTime}`);
 
-    pipeline(opusStream, pcmStream, out, (err) => {
+    pipeline(opusStream, pcmStream, out, async (err) => {
         if (err) {
             console.warn(`Error recording file ${recordingFilePath} - ${err.message}`);
         } else {
-            console.log(`Recorded ${recordingFilePath}`);
+            const mp3 = recordingFilePath.replace(".pcm", ".mp3");
+            await execAwait(`ffmpeg -f s16le -ar ${frameSize} -ac ${channels} -i ${recordingFilePath} ${mp3}`);
+
+            const { stdout } = await execAwait(`whisper --model base --language pt --fp16 False ${mp3} --output_dir ${temporaryFolder} --output_format txt`);
+
+            console.log(`${member.user.displayName}: ${stdout}`);
         }
     });
 }
