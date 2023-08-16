@@ -20,7 +20,9 @@
     "typescript": "*"
   },
   "dependencies": {
+    "@discordjs/voice": "^0.16.0",
     "discord.js": "^14.12.1",
-    "dotenv": "^16.3.1"
+    "dotenv": "^16.3.1",
+    "libsodium-wrappers": "^0.7.11"
   }
 }
