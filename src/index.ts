@@ -80,7 +80,13 @@ function record(guildId: string, member: GuildMember) {
             // const { stdout } = await execAwait(`whisper --model base --language pt --fp16 False ${mp3} --output_dir ${temporaryFolder} --output_format txt`);
             const { stdout } = await execAwait(`whisper-ctranslate2 --model small --language Portuguese --compute_type int8 ${mp3} --output_dir ${temporaryFolder} --output_format txt`);
 
-            console.log(`${member.user.displayName}: ${stdout}`);
+            const textOnly = stdout
+                .replace(/\[\d{2}:\d{2}.\d{3}\s-->\s\d{2}:\d{2}.\d{3}\]/gm, "")
+                .split("\n")
+                .slice(1, -2)
+                .join("\n");
+                
+            console.log(`${member.user.displayName}: ${textOnly}`);
         }
     });
 }
