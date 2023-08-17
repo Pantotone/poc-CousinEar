@@ -8,7 +8,7 @@ export default function NewTranscription(id: string, voiceChannel: VoiceChannel,
         id,
         member: {
             name: member.displayName,
-            avatar: member.avatarURL
+            avatar: member.avatarURL() || member.user.avatarURL()
         },
         startTime
     });

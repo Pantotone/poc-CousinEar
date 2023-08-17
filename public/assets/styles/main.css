@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;700;900&display=swap');
+
+body {
+    font-family: 'Barlow', sans-serif;
+}
+
+#transcriptions {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+transcription-message {
+    display: flex;
+    gap: 20px;
+}
+
+transcription-message .avatar {
+    width: 50px;
+}
+
+transcription-message .avatar img {
+    aspect-ratio: 1;
+    width: 100%;
+    border-radius: 100%;
+}
+
+transcription-message .box {
+    padding: 15px 20px;
+    background: beige;
+    border-radius: 10px;
+}
+
+transcription-message .box .name {
+    font-size: 0.9em;
+    font-weight: 700;
+}
+
+.loading {
+
+}
+
+.loading span {
+    font-weight: 900;
+    display: inline-block;
+    animation: loadingSpan 1s calc(var(--i) * -.2s) ease-in-out infinite; 
+}
+
+/* Animations */
+
+@keyframes loadingSpan {
+    0%, 100% {
+        transform: translateY(-15%);
+    }
+
+    50% {
+        transform: translateY(0%);
+    }
+}
