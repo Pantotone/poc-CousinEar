@@ -18,7 +18,9 @@ socket.on("UpdateTranscription", (data) => {
 });
 
 socket.on("EndTranscription", (data) => {
-    console.log(data);
+    const element = document.getElementById(data.id);
+    const loadingElement = element?.querySelector(".loading");
+    loadingElement?.remove();
 });
 
 class Transcription extends HTMLElement {
