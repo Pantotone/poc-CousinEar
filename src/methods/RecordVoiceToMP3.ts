@@ -3,7 +3,8 @@ import * as consts from "../utils/consts";
 import { GuildMember, VoiceChannel } from "discord.js";
 import * as prism from "prism-media";
 import { pipeline } from "node:stream";
-import fs from "node:fs";
+import {createWriteStream} from "node:fs";
+import fs from "node:fs/promises";
 import { exec } from "child_process";
 import { promisify } from "util";
 import recordMemberStream from "../utils/recordMemberStream";
@@ -21,19 +22,21 @@ export async function RecordVoiceToMP3(voiceChannel: VoiceChannel, member: Guild
         rate: consts.rate
     });
 
-    const recordingFilePath = path.join(consts.recordingFolder, `${id}.pcm`);
-    const pcmOutStream = fs.createWriteStream(recordingFilePath);
+    const rawRecordingFilePath = path.join(consts.recordingFolder, `${id}.pcm`);
+    const pcmOutStream = createWriteStream(rawRecordingFilePath);
 
     return new Promise((resolve, reject) => {
         pipeline(opusStream, pcmStream, pcmOutStream, async (err) => {
 
-            if(err) reject(`Error recording file ${recordingFilePath} - ${err.message}`);
+            if(err) reject(`Error recording file ${rawRecordingFilePath} - ${err.message}`);
 
             try {
                 const mp3Path = path.join(consts.recordingFolder, `${id}.mp3`);
 
-                await execAwait(`ffmpeg -f s16le -ar ${consts.frameSize} -ac ${consts.channels} -i ${recordingFilePath} ${mp3Path}`);
+                await execAwait(`ffmpeg -f s16le -ar ${consts.frameSize} -ac ${consts.channels} -i ${rawRecordingFilePath} ${mp3Path}`);
                 resolve(mp3Path);
+                
+                fs.rm(rawRecordingFilePath);
             } catch(e) {
                 console.error(e);
                 reject(e);

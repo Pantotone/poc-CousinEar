@@ -27,6 +27,9 @@ export default async function CallWhisperCLI(audioFilePath: string): Promise<str
             const processedText = await fs.readFile(transcriptionsFilePath, { encoding: "utf-8" });
 
             resolve(processedText);
+            
+            fs.rm(transcriptionsFilePath);
+            fs.rm(audioFilePath);
         });
 
     });
