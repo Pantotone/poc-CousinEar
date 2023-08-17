@@ -1,19 +1,19 @@
-import { temporaryFolder } from "../utils/consts";
+import fs from "fs/promises";
+import { transcriptionsFolder } from "../utils/consts";
 import { exec } from "child_process";
+import path from "node:path";
 
-export default async function CallWhisperCLI(filePath: string): Promise<string> {
+export default async function CallWhisperCLI(audioFilePath: string): Promise<string> {
     return new Promise((resolve, reject) => {
 
-        exec(`whisper-ctranslate2 --model small --language Portuguese --compute_type int8 ${filePath} --output_dir ${temporaryFolder} --output_format txt`, (err, stdout, stderr) => {
+        exec(`whisper-ctranslate2 --model small --language Portuguese --compute_type int8 ${audioFilePath} --output_dir ${transcriptionsFolder} --output_format txt`, async (err, stdout, stderr) => {
             if(err || stderr) {
                 reject();
             }
 
-            const processedText = stdout
-                .replace(/\[\d{2}:\d{2}.\d{3}\s-->\s\d{2}:\d{2}.\d{3}\]/gm, "")
-                .split("\n")
-                .slice(1, -2)
-                .join("\n");
+            const id = path.basename(audioFilePath, path.extname(audioFilePath));
+            const transcriptionsFilePath = path.join(transcriptionsFolder, `${id}.txt`);
+            const processedText = await fs.readFile(transcriptionsFilePath, { encoding: "utf-8" });
 
             resolve(processedText);
         });

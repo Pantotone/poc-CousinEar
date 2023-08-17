@@ -1,11 +1,13 @@
 import "dotenv/config";
 import { Client, Events, GatewayIntentBits } from "discord.js";
 import fs from "node:fs";
-import { recordingFolder } from "./utils/consts";
+import { recordingFolder, transcriptionsFolder } from "./utils/consts";
 import { OnReady } from "./handlers/OnReady";
 
-fs.mkdir(recordingFolder, { recursive: true }, () => {
-    console.log(`Created temporary recording folder - ${recordingFolder}`);
+[recordingFolder, transcriptionsFolder].forEach(path => {
+    fs.mkdir(path, { recursive: true }, () => {
+        console.log(`Created temporary folder - ${path}`);
+    });
 });
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates] });
