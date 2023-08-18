@@ -1,9 +1,12 @@
 import { VoiceChannel, GuildMember } from "discord.js";
-import { RecordVoiceToMP3 } from "../../../methods/RecordVoiceToMP3";
-import CallWhisperCLI from "../../../methods/CallWhisperCLI";
-import OnTranscriptionStart from "../../../handlers/OnTranscriptionStart";
-import OnTranscriptionUpdate from "../../../handlers/OnTranscriptionUpdate";
-import OnTranscriptionEnd from "../../../handlers/OnTranscriptionEnd";
+
+import { RecordVoiceToMP3 } from "@cousinear/methods/RecordVoiceToMP3";
+import CallWhisperCLI from "@cousinear/methods/CallWhisperCLI";
+
+import OnTranscriptionStart from "@cousinear/handlers/OnTranscriptionStart";
+import OnTranscriptionUpdate from "@cousinear/handlers/OnTranscriptionUpdate";
+import OnTranscriptionEnd from "@cousinear/handlers/OnTranscriptionEnd";
+
 import { STT_Client } from "..";
 
 const WhisperCLI: STT_Client = async (id: string, voiceChannel: VoiceChannel, member: GuildMember) => {

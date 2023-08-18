@@ -1,5 +1,5 @@
 import path from "node:path";
-import * as consts from "../utils/consts";
+import * as consts from "@cousinear/utils/consts";
 import { GuildMember, VoiceChannel } from "discord.js";
 import * as prism from "prism-media";
 import { pipeline } from "node:stream";
@@ -7,7 +7,7 @@ import {createWriteStream} from "node:fs";
 import fs from "node:fs/promises";
 import { exec } from "child_process";
 import { promisify } from "util";
-import recordMemberStream from "../utils/recordMemberStream";
+import recordMemberStream from "@cousinear/utils/recordMemberStream";
 const execAwait = promisify(exec);
 
 export async function RecordVoiceToMP3(voiceChannel: VoiceChannel, member: GuildMember): Promise<string> {

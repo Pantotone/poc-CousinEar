@@ -1,5 +1,5 @@
 import fs from "fs/promises";
-import { transcriptionsFolder } from "../utils/consts";
+import { transcriptionsFolder } from "@cousinear/utils/consts";
 import { exec } from "child_process";
 import path from "node:path";
 

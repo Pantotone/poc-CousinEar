@@ -1,5 +1,5 @@
 import { VoiceChannel } from "discord.js";
-import * as websocket from "../services/websocket";
+import * as websocket from "@cousinear/services/websocket";
 
 export interface TranscriptionUpdate {
     text: string;

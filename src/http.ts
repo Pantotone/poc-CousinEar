@@ -1,7 +1,7 @@
 import express from "express";
 import http from "http";
 import path from "path";
-import { websocket } from "./services/websocket";
+import { websocket } from "@cousinear/services/websocket";
 
 const app = express();
 

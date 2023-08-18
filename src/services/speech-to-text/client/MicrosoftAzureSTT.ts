@@ -1,12 +1,15 @@
-import * as sdk from "microsoft-cognitiveservices-speech-sdk";
 import { GuildMember, VoiceChannel } from "discord.js";
+
+import * as sdk from "microsoft-cognitiveservices-speech-sdk";
 import * as prism from "prism-media";
+import * as consts from "@cousinear/utils/consts";
+import recordMemberStream from "@cousinear/utils/recordMemberStream";
+
 import { STT_Client } from "..";
-import recordMemberStream from "../../../utils/recordMemberStream";
-import * as consts from "../../../utils/consts";
-import OnTranscriptionStart from "../../../handlers/OnTranscriptionStart";
-import OnTranscriptionUpdate from "../../../handlers/OnTranscriptionUpdate";
-import OnTranscriptionEnd from "../../../handlers/OnTranscriptionEnd";
+
+import OnTranscriptionStart from "@cousinear/handlers/OnTranscriptionStart";
+import OnTranscriptionUpdate from "@cousinear/handlers/OnTranscriptionUpdate";
+import OnTranscriptionEnd from "@cousinear/handlers/OnTranscriptionEnd";
 
 const MicrosoftAzureSTT: STT_Client = (id: string, voiceChannel: VoiceChannel, member: GuildMember) => {
 
