@@ -7,9 +7,9 @@ import recordMemberStream from "@cousinear/utils/recordMemberStream";
 
 import { STT_Client } from "..";
 
-import OnTranscriptionStart from "@cousinear/handlers/OnTranscriptionStart";
-import OnTranscriptionUpdate from "@cousinear/handlers/OnTranscriptionUpdate";
-import OnTranscriptionEnd from "@cousinear/handlers/OnTranscriptionEnd";
+import OnTranscriptionStart from "@cousinear/events/OnTranscriptionStart";
+import OnTranscriptionUpdate from "@cousinear/events/OnTranscriptionUpdate";
+import OnTranscriptionEnd from "@cousinear/events/OnTranscriptionEnd";
 
 const MicrosoftAzureSTT: STT_Client = (id: string, voiceChannel: VoiceChannel, member: GuildMember) => {
 

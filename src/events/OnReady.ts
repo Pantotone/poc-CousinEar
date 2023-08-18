@@ -1,6 +1,6 @@
 import { joinVoiceChannel } from "@discordjs/voice";
 import { Client, VoiceChannel } from "discord.js";
-import { onMemberSpeaking } from "@cousinear/handlers/OnMemberSpeaking";
+import { onMemberSpeaking } from "@cousinear/events/OnMemberSpeaking";
 
 export async function OnReady(client: Client<true>) {
     console.log(`Ready! Logged in as ${client.user.tag}`);

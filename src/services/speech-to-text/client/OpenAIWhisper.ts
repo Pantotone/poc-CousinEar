@@ -3,9 +3,9 @@ import { VoiceChannel, GuildMember } from "discord.js";
 import { RecordVoiceToMP3 } from "@cousinear/methods/RecordVoiceToMP3";
 import CallOpenAIWhisper from "@cousinear/methods/CallOpenAIWhisper";
 
-import OnTranscriptionStart from "@cousinear/handlers/OnTranscriptionStart";
-import OnTranscriptionUpdate from "@cousinear/handlers/OnTranscriptionUpdate";
-import OnTranscriptionEnd from "@cousinear/handlers/OnTranscriptionEnd";
+import OnTranscriptionStart from "@cousinear/events/OnTranscriptionStart";
+import OnTranscriptionUpdate from "@cousinear/events/OnTranscriptionUpdate";
+import OnTranscriptionEnd from "@cousinear/events/OnTranscriptionEnd";
 
 import { STT_Client } from "..";
 
