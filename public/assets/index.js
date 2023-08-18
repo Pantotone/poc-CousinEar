@@ -44,6 +44,10 @@ class Transcription extends HTMLElement {
 
             textContainer.replaceChildren(loadingTemplate.content.cloneNode(true));
         }
+
+        if(data.member.color) {
+            this.assignColor(data.member.color);
+        }
     }
 
     /**
@@ -51,6 +55,13 @@ class Transcription extends HTMLElement {
      */
     assignId(id) {
         this.id = id;
+    }
+
+    /**
+     * @param {string} color 
+     */
+    assignColor(color) {
+        this.style.setProperty("--color", `${color}22`);
     }
 
     /**
@@ -89,5 +100,6 @@ if ("customElements" in window) {
  * @property {Object} member
  * @property {string} member.name
  * @property {string} member.avatar
+ * @property {string} member.color
  * @property {string} [text]
  */

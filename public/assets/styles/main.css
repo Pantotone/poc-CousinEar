@@ -27,7 +27,7 @@ transcription-message .avatar img {
 
 transcription-message .box {
     padding: 15px 20px;
-    background: beige;
+    background: var(--color, beige);
     border-radius: 10px;
 }
 
