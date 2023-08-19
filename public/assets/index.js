@@ -10,6 +10,7 @@ socket.on("NewTranscription", (data) => {
     console.log(data);
     const element = new Transcription(data);
     transcriptionsContainer.append(element);
+    element.scrollIntoView({behavior: "smooth"});
 });
 
 socket.on("UpdateTranscription", (data) => {

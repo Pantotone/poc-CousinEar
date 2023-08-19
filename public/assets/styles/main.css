@@ -17,6 +17,7 @@ transcription-message {
 
 transcription-message .avatar {
     width: 50px;
+    flex-shrink: 0;
 }
 
 transcription-message .avatar img {
