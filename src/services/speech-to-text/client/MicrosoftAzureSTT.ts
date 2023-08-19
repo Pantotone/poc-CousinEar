@@ -33,12 +33,14 @@ const MicrosoftAzureSTT: STT_Client = (id: string, voiceChannel: VoiceChannel, m
     pcmStream.on("data", chunk => pushStream.write(chunk));
     pcmStream.on("close", () => pushStream.close());
 
-    const speechTranslationConfig = sdk.SpeechTranslationConfig.fromSubscription(process.env.AZURE_SUBSCRIPTION_KEY, process.env.AZURE_SERVICE_REGION);
+    const speechConfig = sdk.SpeechConfig.fromSubscription(process.env.AZURE_SUBSCRIPTION_KEY, process.env.AZURE_SERVICE_REGION);
+    speechConfig.enableDictation();
+    speechConfig.setProfanity(sdk.ProfanityOption.Raw);
+    
     const audioConfig = sdk.AudioConfig.fromStreamInput(pushStream);
+    const autoDetectSourceLanguageConfig = sdk.AutoDetectSourceLanguageConfig.fromLanguages(["pt-BR", "en-US"]);
 
-    speechTranslationConfig.speechRecognitionLanguage = "pt-BR";
-
-    const speechRecognizer = new sdk.SpeechRecognizer(speechTranslationConfig, audioConfig);
+    const speechRecognizer = sdk.SpeechRecognizer.FromConfig(speechConfig, autoDetectSourceLanguageConfig, audioConfig);
     
     speechRecognizer.recognizing = (sender, event) => {
         OnTranscriptionUpdate(id, voiceChannel, {
@@ -57,7 +59,10 @@ const MicrosoftAzureSTT: STT_Client = (id: string, voiceChannel: VoiceChannel, m
         OnTranscriptionEnd(id, voiceChannel);
     };
 
-    speechRecognizer.recognized = () => {
+    speechRecognizer.recognized = (sender, event) => {
+        OnTranscriptionUpdate(id, voiceChannel, {
+            text: event.result.text
+        });
         OnTranscriptionEnd(id, voiceChannel);
     };
     
