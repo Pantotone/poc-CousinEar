@@ -1,6 +1,8 @@
 
-import { EndBehaviorType, getVoiceConnection } from "@discordjs/voice";
+import { AudioReceiveStream, EndBehaviorType, getVoiceConnection } from "@discordjs/voice";
 import { GuildMember, VoiceChannel } from "discord.js";
+
+export const currentStreams = new Map<string, AudioReceiveStream>();
 
 export default function recordMemberStream(channel: VoiceChannel, member: GuildMember) {
     const connection = getVoiceConnection(channel.guildId);
@@ -12,6 +14,8 @@ export default function recordMemberStream(channel: VoiceChannel, member: GuildM
             duration: 1000
         }
     });
+
+    currentStreams.set(member.id, opusStream);
 
     return opusStream;
 }
