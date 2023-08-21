@@ -22,11 +22,19 @@ socket.on("UpdateTranscription", (data) => {
 
 socket.on("EndTranscription", (data) => {
     const element = document.getElementById(data.id);
+
     const loadingElement = element?.querySelector(".loading");
     loadingElement?.remove();
+
+    // Eliminate transcription element if there's no text
+    if(element?.text.length <= 0) {
+        element.remove();
+    }
 });
 
 class Transcription extends HTMLElement {
+    text = "";
+
     /** @param {TranscriptionElement} data */
     constructor(data) {
         super();
@@ -87,6 +95,8 @@ class Transcription extends HTMLElement {
      * @param {string} text 
      */
     replaceText(text) {
+        this.text = text;
+
         const textContainer = this.querySelector(".message");
         textContainer.replaceChildren(text);
     }
