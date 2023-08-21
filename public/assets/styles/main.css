@@ -38,7 +38,11 @@ transcription-message .box .name {
 }
 
 .loading {
+    display: none;
+}
 
+.loading[data-is-loading="true"] {
+    display: inline;
 }
 
 .loading span {

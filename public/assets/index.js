@@ -23,8 +23,7 @@ socket.on("UpdateTranscription", (data) => {
 socket.on("EndTranscription", (data) => {
     const element = document.getElementById(data.id);
 
-    const loadingElement = element?.querySelector(".loading");
-    loadingElement?.remove();
+    element.setLoading(false);
 
     // Eliminate transcription element if there's no text
     if(element?.text.length <= 0) {
@@ -49,11 +48,6 @@ class Transcription extends HTMLElement {
 
         if(data.text) {
             this.replaceText(data.text);
-        } else {
-            const loadingTemplate = document.getElementById("loading-template");
-            const textContainer = this.querySelector(".message");
-
-            textContainer.replaceChildren(loadingTemplate.content.cloneNode(true));
         }
 
         if(data.member.color) {
@@ -97,8 +91,20 @@ class Transcription extends HTMLElement {
     replaceText(text) {
         this.text = text;
 
-        const textContainer = this.querySelector(".message");
-        textContainer.replaceChildren(text);
+        const textContainer = this.querySelector(".message > span.text");
+        textContainer.textContent = text;
+    }
+
+    /**
+     * @param {boolean} isLoading 
+     */
+    setLoading(isLoading) {
+        const loadingContainers = this.querySelectorAll(".loading");
+        loadingContainers.forEach(container => {
+            if(container instanceof HTMLElement) {
+                container.dataset.isLoading = isLoading;
+            }
+        });
     }
 }
 
