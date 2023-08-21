@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0px;
+
+    --color: #782BF1;
+    color: #fff;
+}
+
+.content {
+    width: 100vw;
+    height: 100vh;
+    
+    display: grid; 
+    grid-template-columns: 745px 1fr; 
+    grid-template-rows: 1fr; 
+    grid-template-areas: 
+      "webcam transcriptions"; 
+}
+
+.webcam {
+    grid-area: webcam;
+    position: relative;
+}
+
+.webcam > .lowerthird {
+    background: var(--color);
+    padding: 35px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    position: absolute;
+    inset: auto 0 0;
+}
+
+.lowerthird .name {
+    font-size: 38px;
+    font-weight: 700;
+}
+
+.lowerthird .role {
+    font-size: 28px;
+    font-weight: 500;
+    opacity: 0.8;
+}
+
+.lowerthird .social {
+    font-size: 28px;
+}
+
+#transcriptions {
+    background: linear-gradient(315deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.8) 100%) var(--color);
+    grid-area: transcriptions;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    padding: 75px;
+}
+
+transcription-message {
+    display: flex;
+    gap: 1em;
+}
+
+transcription-message .avatar {
+    width: 64px;
+    flex-shrink: 0;
+}
+
+transcription-message .avatar img {
+    aspect-ratio: 1;
+    width: 100%;
+    border-radius: 100%;
+}
+
+transcription-message .box {
+    padding: 32px;
+    border-radius: 8px;
+    border: solid 1px linear-gradient(90deg, #393939 0%, var(--color) 100%);
+    background: rgba(30, 30, 30, 0.35);
+}
+
+transcription-message .box .name {
+    color: #B0B0B0;
+    font-size: 32px;
+    font-weight: 700;
+}
+
+transcription-message .box .text {
+    color: #F3F3F3;
+    font-size: 64px;
+}
+
+.loading {
+    display: none;
+}
+
+.loading[data-is-loading="true"] {
+    display: inline;
+}
+
+.loading span {
+    font-weight: 900;
+    display: inline-block;
+    animation: loadingSpan 1s calc(var(--i) * -.2s) ease-in-out infinite; 
+}
+
+/* Animations */
+
+@keyframes loadingSpan {
+    0%, 100% {
+        transform: translateY(-15%);
+    }
+
+    50% {
+        transform: translateY(0%);
+    }
+}
