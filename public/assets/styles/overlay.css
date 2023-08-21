@@ -52,7 +52,7 @@ body {
 }
 
 #transcriptions {
-    background: linear-gradient(315deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.8) 100%) var(--color);
+    background: linear-gradient(315deg, rgba(13, 13, 13, 0.8) 0%, rgba(13, 13, 13, 1) 100%) var(--color);
     grid-area: transcriptions;
     display: flex;
     flex-direction: column;
