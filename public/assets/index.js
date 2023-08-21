@@ -2,10 +2,6 @@ const transcriptionsContainer = document.getElementById("transcriptions");
 
 const socket = io();
 
-socket.emit("SelectChannel", {
-    channelId: "1141160655039250546"
-});
-
 socket.on("NewTranscription", (data) => {
     console.log(data);
     const element = new Transcription(data);

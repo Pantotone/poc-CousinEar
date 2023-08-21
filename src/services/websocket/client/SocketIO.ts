@@ -18,9 +18,5 @@ export class SocketIOModule implements BaseWebSocket {
         if(process.env.DISCORD_TEST_VOICECHANNEL_ID) {
             socket.join(process.env.DISCORD_TEST_VOICECHANNEL_ID);
         }
-
-        socket.on("SelectChannel", (data) => {
-            socket.join(data.channelId);
-        });
     }
 }
