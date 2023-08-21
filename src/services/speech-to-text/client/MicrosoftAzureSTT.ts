@@ -1,4 +1,5 @@
-import { GuildMember, VoiceChannel } from "discord.js";
+import { GuildMember } from "discord.js";
+import { AllowedTypeChannels } from "@cousinear/types";
 
 import * as sdk from "microsoft-cognitiveservices-speech-sdk";
 import * as prism from "prism-media";
@@ -11,7 +12,8 @@ import OnTranscriptionStart from "@cousinear/events/OnTranscriptionStart";
 import OnTranscriptionUpdate from "@cousinear/events/OnTranscriptionUpdate";
 import OnTranscriptionEnd from "@cousinear/events/OnTranscriptionEnd";
 
-const MicrosoftAzureSTT: STT_Client = (id: string, voiceChannel: VoiceChannel, member: GuildMember) => {
+
+const MicrosoftAzureSTT: STT_Client = (id: string, voiceChannel: AllowedTypeChannels, member: GuildMember) => {
 
     if(!process.env.AZURE_SUBSCRIPTION_KEY || !process.env.AZURE_SERVICE_REGION) throw new Error("Invalid Microsoft Azure credentials");
 

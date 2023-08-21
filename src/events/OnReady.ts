@@ -1,13 +1,14 @@
 import { joinVoiceChannel } from "@discordjs/voice";
-import { Client, VoiceChannel } from "discord.js";
+import { Client } from "discord.js";
 import { onMemberSpeaking } from "@cousinear/events/OnMemberSpeaking";
+import { IsValidChannel } from "@cousinear/utils/checks";
 
 export async function OnReady(client: Client<true>) {
     console.log(`Ready! Logged in as ${client.user.tag}`);
 
     const channel = process.env.DISCORD_TEST_VOICECHANNEL_ID ? await client.channels.fetch(process.env.DISCORD_TEST_VOICECHANNEL_ID) : null;
 
-    if(channel instanceof VoiceChannel) {
+    if(IsValidChannel(channel)) {
         const voiceConnection = joinVoiceChannel({
             channelId: channel.id,
             guildId: channel.guildId,

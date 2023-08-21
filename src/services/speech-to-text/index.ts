@@ -1,9 +1,10 @@
-import { GuildMember, VoiceChannel } from "discord.js";
+import { GuildMember } from "discord.js";
 import WhisperCLI from "./client/WhisperCLI";
 import OpenAIWhisper from "./client/OpenAIWhisper";
 import MicrosoftAzureSTT from "./client/MicrosoftAzureSTT";
+import { AllowedTypeChannels } from "@cousinear/types";
 
-export type STT_Client = (id: string, voiceChannel: VoiceChannel, member: GuildMember) => void;
+export type STT_Client = (id: string, voiceChannel: AllowedTypeChannels, member: GuildMember) => void;
 
 const service = process.env.STT_SERVICE || "local_whisper";
 console.log(`[Using ${service} as speech-to-text service]`);

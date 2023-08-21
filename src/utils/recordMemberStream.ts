@@ -1,10 +1,11 @@
 
+import { AllowedTypeChannels } from "@cousinear/types";
 import { AudioReceiveStream, EndBehaviorType, getVoiceConnection } from "@discordjs/voice";
-import { GuildMember, VoiceChannel } from "discord.js";
+import { GuildMember } from "discord.js";
 
 export const currentStreams = new Map<string, AudioReceiveStream>();
 
-export default function recordMemberStream(channel: VoiceChannel, member: GuildMember) {
+export default function recordMemberStream(channel: AllowedTypeChannels, member: GuildMember) {
     const connection = getVoiceConnection(channel.guildId);
     if(!connection) throw new Error("Bot isn't currently on specified Voice Channel");
 

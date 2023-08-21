@@ -1,4 +1,5 @@
-import { VoiceChannel, GuildMember } from "discord.js";
+import { GuildMember } from "discord.js";
+import { AllowedTypeChannels } from "@cousinear/types";
 
 import { RecordVoiceToMP3 } from "@cousinear/methods/RecordVoiceToMP3";
 import CallOpenAIWhisper from "@cousinear/methods/CallOpenAIWhisper";
@@ -9,7 +10,7 @@ import OnTranscriptionEnd from "@cousinear/events/OnTranscriptionEnd";
 
 import { STT_Client } from "..";
 
-const OpenAIWhisper: STT_Client = async (id: string, voiceChannel: VoiceChannel, member: GuildMember) => {
+const OpenAIWhisper: STT_Client = async (id: string, voiceChannel: AllowedTypeChannels, member: GuildMember) => {
     OnTranscriptionStart(id, voiceChannel, member);
 
     const mp3Path = await RecordVoiceToMP3(voiceChannel, member);
