@@ -93,6 +93,8 @@ class Transcription extends HTMLElement {
 
         const textContainer = this.querySelector(".message > span.text");
         textContainer.textContent = text;
+
+        this.scrollIntoView({behavior: "smooth"});
     }
 
     /**
