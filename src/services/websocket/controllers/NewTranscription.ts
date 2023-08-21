@@ -8,6 +8,7 @@ export default function NewTranscription(id: string, voiceChannel: AllowedTypeCh
     websocket.sendToRoom(voiceChannel.id, "NewTranscription", {
         id,
         member: {
+            id: member.id,
             name: member.displayName,
             avatar: member.displayAvatarURL(),
             color: member.user.hexAccentColor

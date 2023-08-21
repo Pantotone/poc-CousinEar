@@ -2,8 +2,14 @@ const transcriptionsContainer = document.getElementById("transcriptions");
 
 const socket = io();
 
+const urlParams = new URLSearchParams(document.location.search);
+const userId = urlParams.get("userId");
+
 socket.on("NewTranscription", (data) => {
     console.log(data);
+
+    if(userId && data.member.id !== userId) return;
+
     const element = new Transcription(data);
     transcriptionsContainer.append(element);
     element.scrollIntoView({behavior: "smooth"});
