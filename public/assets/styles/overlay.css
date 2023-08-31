@@ -90,6 +90,7 @@ transcription-message .box .name {
     color: #B0B0B0;
     font-size: 32px;
     font-weight: 700;
+    margin-bottom: 8px;
 }
 
 transcription-message .box .message {
