@@ -74,6 +74,8 @@ class Transcription extends HTMLElement {
      */
     insertAvatar(avatarUrl) {
         const imageContainer = this.querySelector("img");
+        if(!imageContainer) return;
+        
         imageContainer.src = avatarUrl;
     }
 
