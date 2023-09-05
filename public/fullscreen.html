@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transcrição - Fullscreen</title>
+    <link rel="stylesheet" href="assets/styles/fullscreen.css">
+</head>
+<body>
+    <div id="transcriptions"></div>
+
+    <template id="transcription-template">
+        <div class="name"></div>
+        <div class="message">
+            <span class="text"></span>
+            <span class="loading" data-is-loading="true">
+                <span style="--i: 1">.</span>
+                <span style="--i: 2">.</span>
+                <span style="--i: 3">.</span>
+            </span>
+        </div>
+    </template>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script defer src="assets/index.js"></script>
+</body>
+</html>
