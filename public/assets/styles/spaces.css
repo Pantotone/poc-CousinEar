@@ -6,6 +6,10 @@ body {
     --margin: 35px;
     --borderRadius: 12px;
     --sidebarSize: 550px;
+    --webcamRatioX: 16;
+    --webcamRatioY: 9;
+    --screenRatioX: 16;
+    --screenRatioY: 9;
 
     font-family: 'Inter', sans-serif;
     margin: 0px;
@@ -41,7 +45,9 @@ body {
 #background #webcam {
     fill: #000;
     width: var(--sidebarSize);
-    height: calc(var(--sidebarSize) * calc(9/16));
+    height: calc(var(--sidebarSize) * calc(
+        var(--webcamRatioY, 9) / var(--webcamRatioX, 16)
+    ));
     x: var(--margin);
     y: var(--margin);
 }
@@ -57,7 +63,9 @@ body {
     );
 
     width: var(--width);
-    height: calc(var(--width) * calc(9/16));
+    height: calc(var(--width) * calc(
+        var(--screenRatioY, 9) / var(--screenRatioX, 16)
+    ));
 
     x: calc(
         var(--sidebarSize) +
@@ -84,9 +92,16 @@ body {
     flex-direction: column;
 }
 
+#webcam {
+    aspect-ratio: var(--webcamRatioX, 16) / var(--webcamRatioY, 9);
+}
+
+#screen {
+    aspect-ratio: var(--screenRatioX, 16) / var(--screenRatioY, 9);
+}
+
 #webcam,
 #screen {
-    aspect-ratio: 16/9;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     border-radius: var(--borderRadius);
     rx: var(--borderRadius);
