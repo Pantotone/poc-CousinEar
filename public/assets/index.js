@@ -12,12 +12,18 @@ socket.on("NewTranscription", (data) => {
 
     const element = new Transcription(data);
     transcriptionsContainer.append(element);
-    element.scrollIntoView({behavior: "smooth"});
+    if(transcriptionsContainer.dataset.autoScroll === "true") {
+        element.scrollIntoView({behavior: "smooth"});
+    }
 });
 
 socket.on("UpdateTranscription", (data) => {
     const element = document.getElementById(data.id);
     element.replaceText(data.text);
+
+    if(transcriptionsContainer.dataset.autoScroll === "true") {
+        element.scrollIntoView({behavior: "smooth"});
+    }
 });
 
 socket.on("EndTranscription", (data) => {
@@ -95,8 +101,6 @@ class Transcription extends HTMLElement {
 
         const textContainer = this.querySelector(".message > span.text");
         textContainer.textContent = text;
-
-        this.scrollIntoView({behavior: "smooth"});
     }
 
     /**
