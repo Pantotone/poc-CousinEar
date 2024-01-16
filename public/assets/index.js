@@ -19,7 +19,13 @@ socket.on("NewTranscription", (data) => {
 
 socket.on("UpdateTranscription", (data) => {
     const element = document.getElementById(data.id);
-    element.replaceText(data.text);
+    element.replaceText(
+        data.translations ? 
+            `English: ${data.translations["en-US"]}
+
+             Português: ${data.translations["pt-BR"]}` :
+            data.text
+    );
 
     if(transcriptionsContainer.dataset.autoScroll === "true") {
         element.scrollIntoView({behavior: "smooth"});
