@@ -4,43 +4,81 @@ const socket = io();
 
 const urlParams = new URLSearchParams(document.location.search);
 const userId = urlParams.get("userId");
+const languages = urlParams.get("languages")?.trim().split(",").map(language => language.trim());
+
+const languagesNames = {
+    "en-US": "English",
+    "pt-BR": "Português"
+};
 
 socket.on("NewTranscription", (data) => {
     console.log(data);
 
     if(userId && data.member.id !== userId) return;
 
-    const element = new Transcription(data);
-    transcriptionsContainer.append(element);
-    if(transcriptionsContainer.dataset.autoScroll === "true") {
-        element.scrollIntoView({behavior: "smooth"});
+    if(languages) {
+
+        languages.forEach(language => {
+            const element = new Transcription({
+                ...data,
+                member: {
+                    ...data.member,
+                    name: languagesNames[language] || language
+                }
+            });
+
+            element.dataset.language = language;
+            transcriptionsContainer.append(element);
+
+            if(transcriptionsContainer.dataset.autoScroll === "true") {
+                element.scrollIntoView({behavior: "smooth"});
+            }
+        });
+
+    } else {
+        const element = new Transcription(data);
+        transcriptionsContainer.append(element);
+
+        if(transcriptionsContainer.dataset.autoScroll === "true") {
+            element.scrollIntoView({behavior: "smooth"});
+        }
     }
 });
 
 socket.on("UpdateTranscription", (data) => {
-    const element = document.getElementById(data.id);
-    element.replaceText(
-        data.translations ? 
-            `English: ${data.translations["en-US"]}
 
-             Português: ${data.translations["pt-BR"]}` :
-            data.text
-    );
+    if(languages) {
 
-    if(transcriptionsContainer.dataset.autoScroll === "true") {
-        element.scrollIntoView({behavior: "smooth"});
+        languages.forEach(language => {
+            const element = document.querySelector(`[data-id="${data.id}"][data-language="${language}"]`);
+            element.replaceText(data.translations?.[language]);
+
+            if(transcriptionsContainer.dataset.autoScroll === "true") {
+                element.scrollIntoView({behavior: "smooth"});
+            }
+        });
+
+    } else {
+        const element = document.getElementById(data.id);
+        element.replaceText(data.text);
+    
+        if(transcriptionsContainer.dataset.autoScroll === "true") {
+            element.scrollIntoView({behavior: "smooth"});
+        }
     }
+
 });
 
 socket.on("EndTranscription", (data) => {
-    const element = document.getElementById(data.id);
-
-    element.setLoading(false);
-
-    // Eliminate transcription element if there's no text
-    if(element?.text.length <= 0) {
-        element.remove();
-    }
+    const elements = document.querySelectorAll(`[data-id="${data.id}"]`);
+    elements.forEach(element => {
+        element.setLoading(false);
+    
+        // Eliminate transcription element if there's no text
+        if(element?.text.length <= 0) {
+            element.remove();
+        }
+    });
 });
 
 class Transcription extends HTMLElement {
@@ -72,6 +110,7 @@ class Transcription extends HTMLElement {
      */
     assignId(id) {
         this.id = id;
+        this.dataset.id = id;
     }
 
     /**
